@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 
 import br.com.financeiro.util.HibernateUtil;
 
-@WebFilter(urlPatterns = {"*.jsf"})
+@WebFilter(urlPatterns = { "*.jsf" })
 public class ConexaoHibernateFilter  implements Filter{
 	
 	private SessionFactory sf;
@@ -49,8 +49,5 @@ public class ConexaoHibernateFilter  implements Filter{
 	
 	public void destroy(){ };
 
-	public ConexaoHibernateFilter() {
-		
-	}
 
 }

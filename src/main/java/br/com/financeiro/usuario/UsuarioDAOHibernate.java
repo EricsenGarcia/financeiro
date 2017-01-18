@@ -9,9 +9,6 @@ public class UsuarioDAOHibernate implements UsuarioDAO {
 
 	private Session session;
 
-	public UsuarioDAOHibernate() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public void setSession(Session session) {
 		this.session = session;
