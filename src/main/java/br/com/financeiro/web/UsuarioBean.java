@@ -2,6 +2,9 @@ package br.com.financeiro.web;
 
 
 import javax.faces.bean.*;
+
+import br.com.financeiro.conta.Conta;
+import br.com.financeiro.conta.ContaRN;
 import br.com.financeiro.usuario.Usuario;
 import javax.faces.context.FacesContext;
 
@@ -13,10 +16,11 @@ import br.com.financeiro.usuario.UsuarioRN;
 @ManagedBean(name = "usuarioBean")
 @RequestScoped
 public class UsuarioBean {
-	private Usuario usuario = new Usuario();
-	private String confirmarSenha;
-	private List<Usuario> lista;
-	private String destinoSalvar;
+	private Usuario 		usuario = new Usuario();
+	private String 			confirmarSenha;
+	private List<Usuario> 	lista;
+	private String 			destinoSalvar;
+	private Conta 			conta = new Conta();
 	
 	public String novo() { 
 		this.destinoSalvar = "usuariosucesso";
@@ -42,7 +46,14 @@ public class UsuarioBean {
 		}
 
 		UsuarioRN usuarioRN = new UsuarioRN();
-		usuarioRN.salvar(this.usuario); 
+		usuarioRN.salvar(this.usuario);
+		
+		if (this.conta.getDescricao() != null){
+			this.conta.setUsuario(this.usuario);
+			this.conta.setFavorita(true);
+			ContaRN contaRN = new ContaRN();
+			contaRN.salvar(this.conta);			
+		}
 
 		return this.destinoSalvar; 
 		
@@ -76,6 +87,17 @@ public class UsuarioBean {
 		return this.lista;
 	}
 	
+	public String atribuiPermissao(Usuario usuario, String permissao){
+		this.usuario = usuario;
+		java.util.Set<String> permissoes = this.usuario.getPermissao();
+		if (permissoes.contains(permissao)){
+			permissoes.remove(permissao);
+		} else {
+			permissoes.add(permissao);
+		}	
+		
+		return null;
+	}
 	
 	public Usuario getUsuario() {
 		return usuario;
@@ -106,6 +128,20 @@ public class UsuarioBean {
 	public void setDestinoSalvar(String destinoSalvar) {
 		this.destinoSalvar = destinoSalvar;
 	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public void setLista(List<Usuario> lista) {
+		this.lista = lista;
+	}
+	
+	
 	
 	
 

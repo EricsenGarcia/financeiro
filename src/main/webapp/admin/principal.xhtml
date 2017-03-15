@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
-	
-	<h:head>
-		<meta http-equiv="Context-Type" content="text/html; charset=UTF-8"/>
-		<title>Cadastro de Usuários</title> 
-	</h:head>
-	
-	<h:body>
-		<h1>Cadastro de Usuários</h1>
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/templates/interna.xhtml">
+	<ui:define name="titulo">
+		Cadastro de contas
+	</ui:define>
+	<ui:define name="corpo">	
 		<h:form>
 			<h:messages/>
 			
@@ -56,8 +55,21 @@
 				</h:column>
 				
 				<h:column>
+					<f:facet name="header">Permissões</f:facet>
+					<h:commandLink action="#{usuarioBean.atribuiPermissao(usuario,'ROLE_ADMINISTRADOR')}" title="Permissão Administrador">
+						<h:graphicImage library="imagens" name="ROLE_ADMINISTRADOR_#{usuario.permissao.contains('ROLE_ADMINISTRADOR')}.png" style="border:0" />						
+					</h:commandLink>				
+					
+					<h:commandLink action="#{usuarioBean.atribuiPermissao(usuario,'ROLE_USUARIO_VIP')}" title="Permissão VIP">
+						<h:graphicImage library="imagens" name="ROLE_USUARIO_VIP_#{usuario.permissao.contains('ROLE_USUARIO_VIP')}.png" style="border:0" />						
+					</h:commandLink>
+				</h:column>
+				
+				
+				
+				<h:column>
 					<h:commandLink action="#{usuarioBean.excluir}" 
-						onclick="if (!confim('Confirma exclusão do usuário #{usuario.nome}?')) return false;">]
+						onclick="if (!confim('Confirma exclusão do usuário #{usuario.nome}?')) return false;">
 						<h:graphicImage library="imagens" name="excluir16.png" style="border:0"/>
 						<f:setPropertyActionListener value="#{usuario}" target="#{usuarioBean.usuario}"></f:setPropertyActionListener>
 					
@@ -67,8 +79,8 @@
 			</h:dataTable>
 		
 		</h:form>
-	
-	</h:body>
+	</ui:define>
+</ui:composition>
 	
 	
 </html>
